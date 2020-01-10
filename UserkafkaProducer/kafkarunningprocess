@@ -1,0 +1,9 @@
+1)start zookeeper server =  zookeeper-server-start.bat C:\apache-kafka\kafka_2.13-2.4.0\config\zookeeper.properties
+
+2)start kafka server = kafka-server-start.batC:\apache-kafka\kafka_2.13-2.4.0\config\server.properties
+
+3)Create Topic =  --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 -topic (topic name)
+
+4)Produce a message = kafka-console-producer.bat --broker-list localhost:9092 --topic (topic name)
+
+5)Consume a message = kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic (topic name)
