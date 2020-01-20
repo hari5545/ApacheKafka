@@ -1,3 +1,117 @@
+ Introduction Apache Kafka
+---------------------------
+   Apache Kafka is a distributed streaming platform. A streaming platform has three key capabilities:
+   
+   1) Publish and subscribe to streams of records, similar to a message queue or enterprise messaging system.
+   2) Store streams of records in a fault-tolerant durable way.
+   3) Process streams of records as they occur. 
+   
+To understand how Kafka does these things, let's dive in and explore Kafka's capabilities from the bottom up.
+
+First a few concepts:
+
+    Kafka is run as a cluster on one or more servers that can span multiple datacenters.
+    The Kafka cluster stores streams of records in categories called topics.
+    Each record consists of a key, a value, and a timestamp. 
+
+Kafka has four core APIs:
+
+    1) The Producer API allows an application to publish a stream of records to one or more Kafka topics.
+    2) The Consumer API allows an application to subscribe to one or more topics and process the stream of records produced to them.
+    3) The Streams API allows an application to act as a stream processor, consuming an input stream from one or more topics and producing an output stream to one or more output topics,
+       effectively transforming the input streams to output streams.
+    4) The Connector API allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems.
+   	   For example, a connector to a relational database might capture every change to a table. 
+
+
+Advantages of Kafka
+====================
+
+a) High-throughput :
+------------------
+Without having not so large hardware, Kafka is capable of handling high-velocity and high-volume data. Also, able to support message throughput of thousands of messages per second.
+
+b) Low Latency :
+---------------
+
+It is capable of handling these messages with the very low latency of the range of milliseconds, demanded by most of the new use cases.
+
+c) Fault-Tolerant :
+-----------------
+One of the best advantages is Fault Tolerance. There is an inherent capability in Kafka, to be resistant to node/machine failure within a cluster.
+
+d) Durability :
+---------------
+Here, durability refers to the persistence of data/messages on disk. Also, messages replication is one of the reasons behind durability, hence messages are never lost.
+Let’s discuss Apache Kafka Architecture
+
+e) Scalability :
+----------------
+Without incurring any downtime on the fly by adding additional nodes, Kafka can be scaled-out. Moreover, inside the Kafka cluster, the message handling is fully transparent and these are seamless.
+
+f) Distributed :
+----------------
+The distributed architecture of Kafka makes it scalable using capabilities like replication and partitioning.
+
+g) Message Broker Capabilities :
+--------------------------------
+Kafka tends to work very well as a replacement for a more traditional message broker. Here, a message broker refers to an intermediary program, which translates messages from the formal messaging protocol of the publisher to the formal messaging protocol of the receiver.
+
+h) High Concurrency :
+---------------------
+Kafka is able to handle thousands of messages per second and that too in low latency conditions with high throughput. In addition, it permits the reading and writing of messages into it at high concurrency.
+
+i) By Default Persistent :
+----------------------------
+As we discussed above that the messages are persistent, that makes it durable and reliable.
+
+j) Consumer Friendly :
+----------------------
+It is possible to integrate with the variety of consumers using Kafka. The best part of Kafka is, it can behave or act differently according to the consumer, that it integrates with because each customer has a different ability to handle these messages, coming out of Kafka. Moreover, Kafka can integrate well with a variety of consumers written in a variety of languages.
+
+k) Batch Handling Capable (ETL like functionality) :
+--------------------------------------------------
+Kafka could also be employed for batch-like use cases and can also do the work of a traditional ETL, due to its capability of persists messages.
+
+
+
+
+Disadvantages of Kafka
+======================
+
+a) No Complete Set of Monitoring Tools :
+----------------------------------------
+It is seen that it lacks a full set of management and monitoring tools. Hence, enterprise support staff felt anxious or fearful about choosing Kafka and supporting it in the long run.
+
+b) Issues with Message Tweaking :
+---------------------------------
+As we know, the broker uses certain system calls to deliver messages to the consumer. However, Kafka’s performance reduces significantly if the message needs some tweaking. So, it can perform quite well if the message is unchanged because it uses the capabilities of the system.
+
+c) Not support wildcard topic selection :
+-----------------------------------------
+There is an issue that Kafka only matches the exact topic name, that means it does not support wildcard topic selection. Because that makes it incapable of addressing certain use cases.
+Explore Apache Kafka Monitoring – Methods & Tools
+
+d) Lack of Pace :
+------------------
+There can be a problem because of the lack of pace, while API’s which are needed by other languages are maintained by different individuals and corporates.
+
+e) Reduces Performance :
+----------------------
+In general, there are no issues with the individual message size. However, the brokers and consumers start compressing these messages as the size increases. Due to this, when decompressed, the node memory gets slowly used. Also, compress happens when the data flow in the pipeline. It affects throughput and also performance.
+
+f) Behaves Clumsy : 
+------------------
+Sometimes, it starts behaving a bit clumsy and slow, when the number of queues in a Kafka cluster increases.
+
+g) Lacks some Messaging Paradigms :
+---------------------------------- 
+Some of the messaging paradigms are missing in Kafka like request/reply, point-to-point queues and so on. Not always but for certain use cases, it sounds problematic.
+So, this was all about the advantages and disadvantages of Kafka. Hope you like our explanation.
+
+how to working with apache-kafka :
+==================================
+
 start zookeeper.start bat file like below
 
 zookeeper-server-start.bat C:\apache-kafka\kafka_2.13-2.4.0\config\zookeeper.properties
@@ -17,4 +131,6 @@ kafka-console-producer.bat --broker-list localhost:9092 --topic (topic name)
 Consume a message
 
 kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic (topic name)
+
+
 
