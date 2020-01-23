@@ -19,48 +19,54 @@ import com.example.demo.service.UserService;
 @RestController
 @RequestMapping("/producer")
 public class UserResources {
+	private static final String TOPIC="user-stream"; 
 	@Autowired
 	private UserService userService;
-
 	@Autowired
-	private KafkaTemplate<String, ResponseEntity<UserResponse>> kafkaTemplate;
+	private KafkaTemplate<String, Object> kafkaTemplate;
 
-	private static final String topic= "user";
-	
+
+	@GetMapping(path = "/message")
+	public String sendMessage() {
+		kafkaTemplate.send(TOPIC, "welcome");
+		return "DataHasBeenPublish";
+	}
+
 	//save the user data into db and procuce the response entity in kafka cluster
 	//and return entityResponse to the client
-	
 	@PostMapping(path ="/save",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserResponse> saveUser(@RequestBody UserDto userDto){
 
 		boolean falg=userService.saveUser(userDto);
+		kafkaTemplate.send(TOPIC, userDto);
 		if(falg) {
 			ResponseEntity<UserResponse> resp=ResponseEntity.status(HttpStatus.OK).body(new UserResponse(200,"your data saved sucessfully", userDto));
-			kafkaTemplate.send(topic,resp);
+
 			return resp;
 		}else {
 			ResponseEntity<UserResponse> resp=ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserResponse(404,"your data is not stored in db", userDto)); 
-			kafkaTemplate.send(topic,resp);
+
 			return resp;
 		}
 	}
-	
+
 	//get user data based on the primary key and produce the Response entity in kafka cluster 
 	// and return Response entity along with user data to the client
-	
+
 	@GetMapping(path ="/getUser/{id}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<UserResponse> getUser(@PathVariable("id") int id){
 		UserDto userDto = null;
 
 		userDto=userService.getUser(id);
+		kafkaTemplate.send(TOPIC, userDto);
 		if(userDto!=null) {
-			 ResponseEntity<UserResponse> userResponse=ResponseEntity.status(HttpStatus.OK).body(new UserResponse(200, "your data is", userDto));
-			 kafkaTemplate.send(topic,userResponse);
-	   return userResponse;
+			ResponseEntity<UserResponse> userResponse=ResponseEntity.status(HttpStatus.OK).body(new UserResponse(200, "your data is", userDto));
+
+			return userResponse;
 		}else {
 			ResponseEntity<UserResponse> userResponse = ResponseEntity.status(HttpStatus.NO_CONTENT).body(new UserResponse(204, "primary key is not valid ",userDto));	
-			 kafkaTemplate.send(topic,userResponse);
-			 return userResponse;
+
+			return userResponse;
 		}
 	}
 }

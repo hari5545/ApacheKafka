@@ -1,11 +1,0 @@
-server:
-  port: 8085
-spring:  application:    name: KafkaProducer  datasource:    url: jdbc:mysql://192.168.1.133:3306/kingslive
-    username: kings
-    password: kings
-  jpa:    show-sql: true    hibernate:      naming:        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-  spring :
-    jpa:  
-      properties:
-        hibernate :
-          dialect : org.hibernate.dialect.MySQL5InnoDBDialect 

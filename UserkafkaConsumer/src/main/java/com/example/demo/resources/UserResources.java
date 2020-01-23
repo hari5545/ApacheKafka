@@ -8,23 +8,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.User;
+import com.example.demo.model.UserDto;
 
 @RestController
-@RequestMapping(path ="consumer")
+@RequestMapping(path ="/consumer")
 public class UserResources {
-	User user=null;
+	List<UserDto> userDto=new ArrayList<>();
+	List<String> messages=new ArrayList<>();
 	
 	@GetMapping("/consumeJsonMessage")
-	public User consumeJsonMessage() {
-		return user;
+	public List<UserDto> consumeJsonMessage() {
+		return userDto;
 	}
-  // it consumes the data from the kafka broker 
+	@GetMapping("/consumeStringMessage")
+	public List<String> consumeStringMessage() {
+		return messages;
+	}
 	
-	@KafkaListener(groupId = "user-1", topics = "user", containerFactory = "consumerFactory")
-	public List<User> getUserTopic(User user) {
-		List<User> l=new ArrayList<>();
-		l.add(user);
-		return l;
+	@KafkaListener(groupId = "group-1", topics = "user-stream",containerFactory ="kafkaListenerContainerFactory")
+	public List<String> consumeStringMessage(String data){
+		messages.add(data);
+		return messages;
+	}
+	
+	// it consumes the data from the kafka broker 
+
+	@KafkaListener(groupId = "group-2", topics = "user-stream", containerFactory = "userKafkaListenerContainerFactory")
+	public List<UserDto> getUserTopic(UserDto user) {
+		userDto.add(user);
+		return userDto;
 	}
 }

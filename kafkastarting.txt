@@ -1,4 +1,4 @@
- Introduction Apache Kafka
+﻿ Introduction Apache Kafka
 ---------------------------
    Apache Kafka is a distributed streaming platform. A streaming platform has three key capabilities:
    
@@ -122,7 +122,11 @@ kafka-server-start.batC:\apache-kafka\kafka_2.13-2.4.0\config\server.properties
 
 Create Topic:
 
---create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 -topic (topic name)
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 -topic (topic name)
+
+List down all available topics :
+
+  kafka-topics.bat --list --zookeeper localhost:2181
 
 Produce a message
 
